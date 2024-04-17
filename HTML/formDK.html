@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../BoostrapBTLON/tiny-slider.css">
+    <script src="../BoostrapBTLON/tiny-slider.js"></script>
+    
+    <link rel="stylesheet" href="../BoostrapBTLON/bootstrap.min.css">
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="../BoostrapBTLON/jquery.slim.min.js"></script>
+    <script src="../BoostrapBTLON/popper.min.js"></script>
+    <script src="../BoostrapBTLON/bootstrap.bundle.min.js"></script>
+    <title>Trang đăng kí</title>
+    <style>
+        
+        .custom-container {
+            max-width: 400px;
+            margin: auto;
+            margin-top: 50px; 
+        }
+
+        
+        body {
+            background-color: #1a1a1a;
+            color: #ff9900; 
+        }
+
+        
+        .form_DK {
+            border: 1px solid #ff9900; 
+            padding: 20px; 
+            border-radius: 10px; 
+        }
+
+       
+        h1 {
+            color: #ff9900; 
+        }
+
+      
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            background-color: #333; 
+            color: #ff9900; 
+            border: 1px solid #ff9900; 
+            border-radius: 5px; 
+            padding: 10px; 
+            margin-top: 5px;
+        }
+
+        
+        .custom-control-input:checked~.custom-control-label::before {
+            border-color: #ff9900; 
+            background-color: #ff9900; 
+        }
+
+       
+        button#dangky {
+            background-color: #ff9900; 
+            color: #1a1a1a; 
+            border: none; 
+            border-radius: 5px; 
+            padding: 10px 20px; 
+            cursor: pointer; 
+        }
+
+        button#dangky:hover {
+            background-color: #ffcc00; 
+            color: #1a1a1a; 
+        }
+
+        
+        a[role="button"] {
+            color: #ff9900;
+        }
+    </style>
+</head>
+<body>
+    <!-- Container để căn giữa trang -->
+    <div class="container custom-container">
+        <div class="text-center mb-4">
+            <img src="../IMG/banner2/logo.png" alt="Logo" width="350px">
+        </div>
+        <!-- Form đăng ký -->
+        <div class="form_DK">
+            <form class="text-center border border-light" action="../html/formDN.html">
+                <h1>Đăng kí</h1>
+           
+                <div class="form-row mb-1">
+                    <div class="col">
+                        <!-- First name -->
+                        <input type="text" id="txtho" onblur="kiemtrahoten()" class="form-control" placeholder="Họ">
+                    </div>
+                    <div class="col">
+                        <!-- Last name -->
+                        <input type="text" id="txtten" onblur="kiemtrahoten()" class="form-control" placeholder="Tên">
+                    </div>
+                </div>
+                <span><i class="errorr" id="showhoten">(*)</i></span> 
+                <!-- E-mail -->
+                <input type="email" id="txtEmail" onblur="kiemtraEmail()" class="form-control mt-2 mb-1" placeholder="E-mail">
+                <span><i class="errorr" id="showEmail">(*)</i></span>
+                <!-- Password -->
+                <input type="password" id="txtMK" onblur="kiemtramatkhau()" class="form-control mt-2" placeholder="Mật Khẩu" aria-describedby="defaultRegisterFormPasswordHelpBlock">
+                <span><i class="errorr" id="showMK">(*)</i></span>
+            
+                <!-- Phone number -->
+                <input type="text" id="txtSDT" onblur="kiemtraSDT()" class="form-control mt-2" placeholder="Số điện thoại" aria-describedby="defaultRegisterFormPhoneHelpBlock">
+                <span><i class="errorr" id="showSDT">(*)</i></span>
+            
+                <!-- Newsletter -->
+                <div class="custom-control custom-checkbox mt-2">
+                    <input type="checkbox" class="custom-control-input"  id="checkdongy">
+                    <label class="custom-control-label" for="checkdongy">Bạn đồng ý với các điều khoản dịch vụ của chúng tôi</label>
+                </div>
+            
+                <!-- Sign up button -->
+                <button class="btn btn-info my-4 btn-block" onclick="checkdongyvoichungtoi()" id="dangky" type="button">Đăng Ký</button>
+            
+           
+            </form>
+        </div>
+    </div>
+    <!-- Footer -->
+  
+    <script>
+        function kiemtrahoten(){
+            var txt1 = document.getElementById("txtho").value
+            var txt2 = document.getElementById("txtten").value
+            var showhoten = document.getElementById("showhoten"); 
+            if((txt1=="") || (txt2==""))
+            {
+                showhoten.innerHTML = "Không được để trống"
+                return false;
+            }
+            showhoten.innerHTML = "(*)"
+            return true;
+        }
+        function kiemtraEmail(){
+            var txt3 = document.getElementById("txtEmail").value
+            var showEmail = document.getElementById("showEmail")
+            var checkEmail = /\w{1,}@\w{1,}.com$/;
+            if(!checkEmail.test(txt3)){
+                showEmail.innerHTML = "Phải đúng định dạng xxx@gmail.com"
+                return false
+            }
+            showEmail.innerHTML = "(*)"
+            return true
+        }
+        function kiemtramatkhau(){
+            var txt4 = document.getElementById("txtMK").value
+            var showMK = document.getElementById("showMK");
+            if(txt4.length < 6){
+                showMK.innerHTML = "Phải có ít nhất 6 ký tự"
+                return false;
+            }
+            showMK.innerHTML = "(*)"
+            return true;
+        }
+
+        function kiemtraSDT(){
+            var txt5 = document.getElementById("txtSDT").value
+            var showSDT = document.getElementById("showSDT");
+            var checkSDT = /[0-9]{4}\s[0-9]{3}\s[0-9]{3}/gm
+            if(!checkSDT.test(txt5)){
+                showSDT.innerHTML = "Phải đúng định dạng xxxx xxx xxx"
+                return false;
+            }
+            showSDT.innerHTML = "(*)"
+            return true;
+        }
+        function kiemtradangky(){
+            if(!kiemtrahoten() || !kiemtramatkhau() || !kiemtraEmail() || !kiemtramatkhau() || !kiemtraSDT()){
+                return false
+            }
+            return true;
+        }
+
+        function checkdongyvoichungtoi(){
+            if(kiemtradangky())
+                {
+                var danhsachtaikhoan = JSON.parse(localStorage.getItem('danhsachtaikhoan')) || [];
+                var txttaikhoan = document.getElementById("txtEmail").value;
+                var txtmatkhau = document.getElementById("txtMK").value;
+
+                var tk = {
+                    tendangnhap: txttaikhoan,
+                    matkhau: txtmatkhau
+                };
+                danhsachtaikhoan.push(tk);
+                localStorage.setItem('danhsachtaikhoan', JSON.stringify(danhsachtaikhoan));
+                alert('Đăng ký thành công');
+                window.location.href="../html/formDN.html";
+                }
+        }
+    </script>
+</body>
+</html>

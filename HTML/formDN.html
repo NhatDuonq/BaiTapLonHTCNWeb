@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../BoostrapBTLON/tiny-slider.css">
+    <script src="../BoostrapBTLON/tiny-slider.js"></script>
+    
+    <title>Trang đăng nhập</title>
+    <link rel="stylesheet" href="../BoostrapBTLON/bootstrap.min.css">
+    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <script src="../BoostrapBTLON/jquery.slim.min.js"></script>
+    <script src="../BoostrapBTLON/popper.min.js"></script>
+    <script src="../BoostrapBTLON/bootstrap.bundle.min.js"></script>
+</head>
+<body style="background-color: #1a1a1a; color: #ff9900;"> <!-- Đổi màu nền và màu chữ -->
+
+    <!-- Header -->
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="text-center mb-4">
+                    <img src="../IMG/banner2/logo.png" alt="Logo" width="500px" height="200px">
+                </div>
+                <div class="form_DN">
+                    <form class="form_1 text-center border border-light" action="">
+
+                        <h1 style="color: #ff9900;">Đăng nhập</h1> <!-- Đổi màu tiêu đề -->
+
+                        <!-- Email -->
+                        <input type="email" id="txtdangnhaptaikhoan" class="form-control mb-4" placeholder="E-mail" style="background-color: #333; color: #ff9900; border: 1px solid #ff9900; border-radius: 5px;"> <!-- Đổi màu input -->
+
+                        <!-- Password -->
+                        <input type="password" id="txtdangnhapmatkhau" class="form-control mb-4" placeholder="Mật Khẩu" style="background-color: #333; color: #ff9900; border: 1px solid #ff9900; border-radius: 5px;"> <!-- Đổi màu input -->
+
+                        <div class="d-flex justify-content-around">
+                            <div>
+                                <!-- Remember me -->
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
+                                    <label class="custom-control-label" for="defaultLoginFormRemember" style="color: #ff9900;">Nhớ Tài Khoản</label> <!-- Đổi màu chữ -->
+                                </div>
+                            </div>
+                            <div>
+                                <!-- Forgot password -->
+                                <a href="../HTML/formDK.html" style="color: orange;">Đăng Kí Ngay</a>
+                            </div>
+                        </div>
+
+                        <!-- Sign in button -->
+                        <button class="btn btn-info btn-block my-4" type="button" id="dangnhaptk" style="background-color: orange;">Đăng Nhập</button> <!-- Đổi màu nút -->
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+
+    <script>
+        // Function to retrieve account data from local storage
+        function layrataikhoan() {
+            var danhsachtaikhoan = localStorage.getItem("danhsachtaikhoan");
+            if (danhsachtaikhoan) {
+                return JSON.parse(danhsachtaikhoan);
+            } else {
+                return [];
+            }
+        }
+
+        // Function to handle login button click
+        $("#dangnhaptk").click(function(){
+            var txttendangnhap = document.getElementById("txtdangnhaptaikhoan").value;
+            var txtmatkhaudangnhap = document.getElementById("txtdangnhapmatkhau").value;
+            var danhsachtaikhoan = layrataikhoan();
+            var check = false;
+            for (var i = 0; i < danhsachtaikhoan.length; i++) {
+                if (danhsachtaikhoan[i].tendangnhap == txttendangnhap && danhsachtaikhoan[i].matkhau == txtmatkhaudangnhap) {
+                    check = true;
+                    break;
+                }
+            }
+
+            if (check) {   
+                alert('Đăng nhập thành công');
+                window.location.href="../html/Home.html";
+            } else {
+                alert('Đăng nhập không thành công');
+            }
+        });
+    </script>
+</body>
+</html>

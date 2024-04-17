@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang thanh toán</title>
+    <!-- Thêm các tệp CSS cần thiết -->
+    <link rel="stylesheet" href="../BoostrapBTLON/bootstrap.min.css">
+    <style>
+        /* Thêm CSS tùy chỉnh cho trang thanh toán */
+        body {
+            background-color: #3c3c3c; /* Màu nền đen */
+            color: orange; /* Đặt màu chữ cho trang */
+        }
+
+        /* Định dạng cho container */
+        .container {
+            background-color: black; /* Đặt màu nền của container */
+            padding: 20px; /* Đặt khoảng cách giữa nội dung và biên container */
+            border-radius: 10px; /* Bo tròn viền của container */
+            box-shadow: 0px 0px 10px 0px orange; /* Đổ bóng cho container */
+        }
+
+        /* Định dạng cho tiêu đề */
+        h1 {
+            color: orange; /* Đặt màu chữ cho tiêu đề */
+            text-align: center; /* Căn giữa tiêu đề */
+        }
+
+        /* Định dạng cho form */
+        form {
+            margin-top: 20px; /* Khoảng cách giữa tiêu đề và form */
+        }
+
+        /* Định dạng cho nhãn */
+        label {
+            color: orange; /* Đặt màu chữ cho nhãn */
+        }
+
+        /* Định dạng cho input và textarea */
+        input[type="tel"],
+        textarea {
+            background-color: #333; /* Đặt màu nền cho input và textarea */
+            color: orange; /* Đặt màu chữ cho input và textarea */
+            border: 1px solid orange; /* Đặt viền cho input và textarea */
+            border-radius: 5px; /* Bo tròn viền */
+            padding: 5px; /* Đặt khoảng cách giữa nội dung và viền */
+        }
+
+        /* Định dạng cho nút xác nhận thanh toán */
+        button[type="submit"] {
+            background-color: orange; /* Đặt màu nền cho nút */
+            color: black; /* Đặt màu chữ cho nút */
+            border: none; /* Loại bỏ viền */
+            border-radius: 5px; /* Bo tròn viền */
+            padding: 10px 20px; /* Đặt khoảng cách giữa nội dung và viền */
+            cursor: pointer; /* Thay đổi con trỏ khi di chuột vào nút */
+        }
+
+        /* Định dạng cho nút xác nhận thanh toán khi hover */
+        button[type="submit"]:hover {
+            background-color: darkorange; /* Đặt màu nền khi hover */
+            color: black; /* Đặt màu chữ khi hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Thông tin thanh toán</h1>
+        <!-- Danh sách sản phẩm -->
+        <div id="cart-items">
+            <!-- Đây là nơi để danh sách các sản phẩm trong giỏ hàng được hiển thị -->
+        </div>
+        <!-- Tổng giá trị đơn hàng -->
+        <div id="total-price">
+            <!-- Đây là nơi để hiển thị tổng giá trị của giỏ hàng -->
+        </div>
+
+        <!-- Form thanh toán -->
+        <form id="payment-form">
+            <!-- Trường nhập số điện thoại -->
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6"><label for="phone">Số điện thoại nhận hàng:</label></div>
+                    <div class="col-md-6"><input type="tel" id="phone" class="form-control" pattern="[0-9]{10}" required></div>
+                </div>
+            </div>
+            <!-- Trường nhập địa chỉ giao hàng -->
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6"><label for="address">Địa chỉ giao hàng:</label></div>
+                    <div class="col-md-6"> <textarea id="address" class="form-control" required></textarea></div>
+                </div>
+            </div>
+            <!-- Nút xác nhận thanh toán -->
+            <button type="submit" class="btn btn-primary">Xác nhận thanh toán</button>
+        </form>
+    </div>
+
+    <!-- Thêm các tệp script JavaScript cần thiết -->
+    <script src="../BoostrapBTLON/jquery.slim.min.js"></script>
+    <script src="../BoostrapBTLON/popper.min.js"></script>
+    <script src="../BoostrapBTLON/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Định nghĩa biểu thức chính quy cho số điện thoại (10 chữ số)
+            var phoneRegex = /^[0-9]{10}$/;
+            // Định nghĩa biểu thức chính quy cho địa chỉ (có thể là bất kỳ ký tự nào)
+            var addressRegex = /.+/;
+
+            // Lấy danh sách sản phẩm từ Local Storage và hiển thị chúng trên trang thanh toán
+            var cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+            var cartItemsContainer = document.getElementById("cart-items");
+            var totalPriceContainer = document.getElementById("total-price");
+            var totalPrice = 0;
+
+            // Hiển thị danh sách sản phẩm trong giỏ hàng
+            cartItems.forEach(function(item) {
+                var productElement = document.createElement("div");
+                productElement.textContent = item;
+                // Thêm sản phẩm vào container
+                cartItemsContainer.appendChild(productElement);
+                // Cập nhật tổng giá trị
+                totalPrice += 100;/*Giá của sản phẩm*/
+            });
+
+            // Hiển thị tổng giá trị của giỏ hàng
+            totalPriceContainer.textContent = "Tổng giá trị: " + totalPrice + " VNĐ";
+
+            // Xử lý sự kiện khi người dùng xác nhận thanh toán
+            document.getElementById("payment-form").addEventListener("submit", function(event) {
+                // Ngăn chặn hành động mặc định của form
+                event.preventDefault();
+                // Thực hiện các thao tác cần thiết để xử lý thanh toán
+                var phoneNumber = document.getElementById("phone").value;
+                var address = document.getElementById("address").value;
+                // Kiểm tra số điện thoại có đúng định dạng không
+                if (!phoneRegex.test(phoneNumber)) {
+                    alert("Số điện thoại không hợp lệ. Vui lòng nhập 10 chữ số.");
+                    return;
+                }
+                // Kiểm tra địa chỉ có rỗng không
+                if (!addressRegex.test(address)) {
+                    alert("Vui lòng nhập địa chỉ giao hàng.");
+                    return;
+                }
+                // Có thể thực hiện các hành động khác như gửi dữ liệu đến máy chủ, xử lý đơn hàng, v.v.
+                alert("Thanh toán thành công! Số điện thoại: " + phoneNumber + ", Địa chỉ: " + address);
+                // Sau khi xử lý xong, có thể chuyển hướng người dùng đến trang cảm ơn hoặc trang chủ
+                window.location.href = "thankyouXXX.html";
+            });
+        });
+    </script>
+</body>
+</html>
